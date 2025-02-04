@@ -68,6 +68,8 @@ GLITCH_DEF GlitchTester* glitch_Tester_New();
 GLITCH_DEF void glitch_Print_Passed(GlitchTester* t, bool enable);
 GLITCH_DEF void glitch_End(GlitchTester* t);
 
+// Static
+
 static void __glitch_Passed(GlitchTester* t, char* func, char* file, int line, const char* description);
 static void __glitch_Did_Not_Pass(GlitchTester* t, char* func, char* file, int line, const char* description);
 
@@ -101,7 +103,7 @@ struct __Success {
 };
 
 typedef struct GlitchTester {
-    bool             printPassed;
+    bool             print_passed;
     size_t           success_index;
     struct __Success successes[GLITCH_MAXIMUM];
     size_t           error_index;
@@ -109,7 +111,7 @@ typedef struct GlitchTester {
 } GlitchTester;
 
 GLITCH_IMPL GlitchTester* glitch_Tester_New() {
-    GlitchTester t   = (GlitchTester*)malloc(sizeof(GlitchTester));
+    GlitchTester* t  = (GlitchTester*)malloc(sizeof(GlitchTester));
     t->print_passed  = 0;
     t->success_index = 0;
     t->error_index   = 0;
@@ -118,7 +120,7 @@ GLITCH_IMPL GlitchTester* glitch_Tester_New() {
 }
 
 GLITCH_IMPL void glitch_End(GlitchTester* t) {
-    if (t->printPassed) {
+    if (t->print_passed) {
         for (size_t i = 0; i < t->success_index; ++i) {
             struct __Success success = t->successes[i];
             printf("\033[1;32m%s:%d - %s\033[0m\n", success.file, success.line,
@@ -135,8 +137,10 @@ GLITCH_IMPL void glitch_End(GlitchTester* t) {
 }
 
 GLITCH_IMPL void glitch_Print_Passed(GlitchTester* t, bool enable) {
-    t->printPassed = enable;
+    t->print_passed = enable;
 }
+
+// Static
 
 void __glitch_Passed(GlitchTester* t, char* func, char* file, int line, const char* description) {
     for (size_t i = 0; i < t->success_index; ++i) {
@@ -149,7 +153,7 @@ void __glitch_Passed(GlitchTester* t, char* func, char* file, int line, const ch
         .function    = func,
         .file        = file,
         .line        = line,
-        .description = (char*)description,
+        .description = (!description ? "\0" : (char*)description),
     };
 }
 
@@ -164,7 +168,7 @@ void __glitch_Did_Not_Pass(GlitchTester* t, char* func, char* file, int line, co
         .function    = func,
         .file        = file,
         .line        = line,
-        .description = (char*)description,
+        .description = (!description ? "\0" : (char*)description),
     };
 }
 
