@@ -68,10 +68,8 @@ GLITCH_DEF GlitchTester* glitch_Tester_New();
 GLITCH_DEF void glitch_Print_Passed(GlitchTester* t, bool enable);
 GLITCH_DEF void glitch_End(GlitchTester* t);
 
-// Static
-
-static void __glitch_Passed(GlitchTester* t, char* func, char* file, int line, const char* description);
-static void __glitch_Did_Not_Pass(GlitchTester* t, char* func, char* file, int line, const char* description);
+void __glitch_Passed(GlitchTester* t, char* func, char* file, int line, const char* description);
+void __glitch_Did_Not_Pass(GlitchTester* t, char* func, char* file, int line, const char* description);
 
 #ifndef GLITCH_ASSERT
  #define GLITCH_ASSERT(tester, condition, description)                                        \
@@ -139,8 +137,6 @@ GLITCH_IMPL void glitch_End(GlitchTester* t) {
 GLITCH_IMPL void glitch_Print_Passed(GlitchTester* t, bool enable) {
     t->print_passed = enable;
 }
-
-// Static
 
 void __glitch_Passed(GlitchTester* t, char* func, char* file, int line, const char* description) {
     for (size_t i = 0; i < t->success_index; ++i) {

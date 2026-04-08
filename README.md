@@ -14,7 +14,7 @@ Simply copy-paste/download the `saci-tessting.h` file to your project!
 ```c
 #define GLITCH_IMPLEMENTATION 
 
-#include "path-to/saci-testing.h" // define before including
+#include "path-to/glitc.h" // define before including
 
 static void MyTestFunction() {
     GLITCH_PrintPassed(true); // will print the passed tests. Default: false.
