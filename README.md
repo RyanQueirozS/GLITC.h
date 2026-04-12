@@ -1,4 +1,4 @@
-# Saci Testing
+# GLITC.h
 
  * NOTE!
  * If you are using WINDOWS and want to build the library you MUST SPECIFY "BUILD_GLITCH_LIB"
@@ -7,14 +7,14 @@
  * #define MODULE_NAME
  * before the include. Here is a list of all modules and what they do:
  
-Simply copy-paste/download the `saci-tessting.h` file to your project!
+Simply copy-paste/download the `glitc.h` file to your project!
 
 # Example
 
 ```c
 #define GLITCH_IMPLEMENTATION 
 
-#include "path-to/saci-testing.h" // define before including
+#include "path-to/glitc.h" // define before including
 
 static void MyTestFunction() {
     GLITCH_PrintPassed(true); // will print the passed tests. Default: false.
